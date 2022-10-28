@@ -27,4 +27,22 @@ public class CrontroladorRest {
         Estudiante obj = estudianteService.guardar(estudiante);
         return new ResponseEntity<Estudiante>(obj, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/encontrar/{idEstudiante}")
+    public Estudiante encontrarEstudiante(@PathVariable Estudiante idEstudiante){
+        return estudianteService.encontrarEstudiante(idEstudiante);
+    }
+    @GetMapping(value = "/eliminar/{idEstudiante}")
+    public ResponseEntity<Estudiante> eliminar(@PathVariable Estudiante idEstudiante){
+        Estudiante estudiante = estudianteService.encontrarEstudiante(idEstudiante);
+        if(estudiante != null){
+            estudianteService.eliminar(idEstudiante);
+        }else {
+            return new ResponseEntity<Estudiante>(estudiante, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<Estudiante>(estudiante, HttpStatus.OK);
+    }
+
+
 }
